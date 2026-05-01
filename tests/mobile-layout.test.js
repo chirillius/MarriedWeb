@@ -60,3 +60,25 @@ test('long envelope greetings are split into narrow lines', () => {
   assert.ok(lines.length >= 3, `Expected at least 3 lines, got ${lines.length}: ${output}`);
   assert.ok(lines.every(line => line.length <= 18), `Expected short lines, got: ${lines.join(' | ')}`);
 });
+
+test('welcome form asks for surname before name and shows the Kirill example', () => {
+  assert.match(html, /<label for="guestName">Фамилия и имя<\/label>/);
+  assert.match(html, /placeholder="Например: Артамонов Кирилл"/);
+  assert.match(html, /Пожалуйста, введите фамилию и имя/);
+  assert.doesNotMatch(html, /Имя и фамилия/);
+  assert.doesNotMatch(html, /Пожалуйста, введите имя и фамилию/);
+  assert.doesNotMatch(html, /Например: Артамонова Мария/);
+});
+
+test('hotel contact phone is the real booking number', () => {
+  assert.match(html, /\+7 \(4912\) 408-900/);
+  assert.doesNotMatch(html, /\+7 \(900\) 000 00-00/);
+});
+
+test('location section includes an external map button', () => {
+  assert.match(html, /class="[^"]*\bmap-link\b[^"]*"/);
+  assert.match(html, /href="https:\/\/yandex\.ru\/maps\/\?text=[^"]*"/);
+  assert.match(html, /target="_blank"/);
+  assert.match(html, /rel="noopener noreferrer"/);
+  assert.match(html, />Открыть карту</);
+});
