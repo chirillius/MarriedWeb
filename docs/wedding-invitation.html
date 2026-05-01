@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
     <title>Приглашение на свадьбу</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
@@ -293,6 +293,7 @@
             z-index: 2;
             align-items: center;
             justify-content: center;
+            touch-action: manipulation;
         }
         .pre-invitation-screen.visible {
             display: flex;
@@ -425,13 +426,13 @@
             top: 17%;
             left: 50%;
             z-index: 4;
-            width: min(68%, 440px);
+            width: min(74%, 460px);
             transform: translateX(-50%);
             font-family: 'Great Vibes', cursive;
-            font-size: clamp(2.1rem, 4.3vw, 3.5rem);
+            font-size: clamp(1.95rem, 4.1vw, 3.35rem);
             color: var(--rose);
             text-align: center;
-            line-height: .92;
+            line-height: .9;
             margin: 0;
             text-shadow: 0 8px 24px rgba(181,72,90,.12);
             transition: transform .55s ease, opacity .4s ease;
@@ -455,6 +456,9 @@
             color: #fff;
             background: linear-gradient(145deg, #d06b82 0%, #bb5267 70%, #a63e54 100%);
             box-shadow: 0 18px 30px rgba(181,72,90,.24);
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
         .tear-seal-btn:hover {
             transform: translate(-50%, -52%);
@@ -469,20 +473,20 @@
             position: absolute;
             left: 50%;
             top: 60%;
-            width: 112px;
-            height: 112px;
+            width: 92px;
+            height: 92px;
             transform: translate(-50%, -50%);
             border-radius: 50%;
             display: grid;
             place-items: center;
             z-index: 5;
-            border: 5px solid rgba(255,255,255,.74);
+            border: 4px solid rgba(255,255,255,.74);
             text-shadow: 0 1px 1px rgba(90,38,45,.16);
         }
         .envelope-seal::before {
             content: '';
             position: absolute;
-            inset: 10px;
+            inset: 8px;
             border-radius: 50%;
             border: 1px dashed rgba(255,255,255,.34);
         }
@@ -1134,6 +1138,19 @@
 
         /* ── RESPONSIVE ── */
         @media (max-width:600px) {
+            .pre-invitation-screen {
+                padding: 28px 10px;
+            }
+            .envelope-visual {
+                width: min(100%, 360px);
+                aspect-ratio: 1 / 1;
+            }
+            .pre-invitation-title {
+                top: 18%;
+                width: 76%;
+                font-size: clamp(1.7rem, 8vw, 2.2rem);
+                line-height: .86;
+            }
             .card-frame { margin:10px; padding:24px 16px; }
             .couple-portrait {
                 width: calc(100% + 32px);
@@ -1162,7 +1179,7 @@
                 padding: 10px 12px 14px;
             }
             .rsvp-section { padding:20px 16px; }
-            .dress-palette { grid-template-columns: repeat(4, 1fr); gap: 7px; }
+            .dress-palette { grid-template-columns: repeat(3, 1fr); gap: 8px; }
             .dress-swatch { min-height: 58px; }
             .dress-note { grid-template-columns: 1fr; }
             .modal { padding:34px 22px; }
@@ -1687,15 +1704,46 @@ const normalizeGuestNameValue = window.normalizeGuestName || (value => value.tri
 
 function formatPreInviteGreeting(role) {
     const words = String(role || '').trim().split(/\s+/u).filter(Boolean);
+    if (!words.length) {
+        return '!';
+    }
+
     if (words.length <= 1) {
         return `${role}!`;
     }
 
-    const splitIndex = Math.ceil(words.length / 2);
-    const firstLine = words.slice(0, splitIndex).join(' ');
-    const secondLine = words.slice(splitIndex).join(' ');
+    const lineCount = words.length >= 4 ? 3 : 2;
+    let bestLines = null;
+    let bestScore = Number.POSITIVE_INFINITY;
 
-    return `<span class="title-line">${firstLine}</span><span class="title-line">${secondLine}!</span>`;
+    function buildLines(startIndex, remainingLines, currentLines) {
+        if (remainingLines === 1) {
+            const candidate = [...currentLines, words.slice(startIndex).join(' ')];
+            const lengths = candidate.map(line => line.length);
+            const maxLength = Math.max(...lengths);
+            const minLength = Math.min(...lengths);
+            const score = (maxLength * 100) + (maxLength - minLength);
+
+            if (score < bestScore) {
+                bestScore = score;
+                bestLines = candidate;
+            }
+            return;
+        }
+
+        const maxEnd = words.length - remainingLines + 1;
+        for (let end = startIndex + 1; end <= maxEnd; end += 1) {
+            buildLines(end, remainingLines - 1, [...currentLines, words.slice(startIndex, end).join(' ')]);
+        }
+    }
+
+    buildLines(0, lineCount, []);
+    const lines = bestLines || [words.join(' ')];
+
+    return lines.map((line, index) => {
+        const suffix = index === lines.length - 1 ? '!' : '';
+        return `<span class="title-line">${line}${suffix}</span>`;
+    }).join('');
 }
 
 function resetRevealFlow() {
