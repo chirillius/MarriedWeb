@@ -82,3 +82,36 @@ test('location section includes an external map button', () => {
   assert.match(html, /rel="noopener noreferrer"/);
   assert.match(html, />Открыть карту</);
 });
+
+test('invitation copy matches the updated guest wording', () => {
+  assert.match(html, /Скоро наступит самый очень важный для нас день - мы станем семьей/);
+  assert.match(html, /Просим избегать белых и ярких неоновых оттенков/);
+  assert.match(html, />Локация</);
+  assert.doesNotMatch(html, /Будем счастливы разделить с вами/);
+  assert.doesNotMatch(html, /этот особенный день нашей жизни/);
+  assert.match(html, />Анкета гостя</);
+  assert.match(html, />Пожалуйста, заполните форму ниже и подтвердите Ваше присутствие</);
+  assert.match(html, />✓ Да, с удовольствием буду</);
+  assert.match(html, />✕ К сожалению, не смогу</);
+  assert.match(html, /Как планируете добираться\?/);
+  assert.match(html, /Как планируете покидать праздничным вечер\?/);
+  assert.match(html, /Что предпочитаете из напитков\?/);
+  assert.match(html, /Мы скажем «да» через…/);
+
+  assert.doesNotMatch(html, /Подтвердите ваше присутствие/);
+  assert.doesNotMatch(html, /Я буду/);
+  assert.doesNotMatch(html, /Не смогу/);
+  assert.doesNotMatch(html, /На чем планируете добираться/);
+  assert.doesNotMatch(html, /На чем планируете уползать/);
+  assert.doesNotMatch(html, /до свадьбы осталось/);
+});
+
+test('transport survey only offers personal transport or transfer', () => {
+  assert.equal((html.match(/<input type="radio" name="arrive"/g) || []).length, 2);
+  assert.equal((html.match(/<input type="radio" name="depart"/g) || []).length, 2);
+  assert.match(html, /На личном транспорте\/ с кем-нибудь из гостей/);
+  assert.match(html, /Потребуется трансфер/);
+  assert.doesNotMatch(html, /На общественном транспорте/);
+  assert.doesNotMatch(html, /Останусь на месте проведения/);
+  assert.doesNotMatch(html, /Нужна газель/);
+});

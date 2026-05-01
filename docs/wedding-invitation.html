@@ -285,6 +285,16 @@
             margin: 8px 0 0;
             min-height: 1.5em;
         }
+        .personal-intro {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.12rem;
+            font-style: italic;
+            color: var(--medium);
+            text-align: center;
+            line-height: 1.65;
+            max-width: 520px;
+            margin: 4px auto 18px;
+        }
         .pre-invitation-screen {
             display: none;
             min-height: 100vh;
@@ -765,6 +775,16 @@
 
         /* ── DETAILS ── */
         .details { margin:4px 0; }
+        .section-heading {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.85rem;
+            font-weight: 600;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--rose);
+            text-align: center;
+            margin: 34px 0 18px;
+        }
         .detail-item {
             display: flex;
             align-items: flex-start;
@@ -1200,6 +1220,7 @@
                 padding: 10px 12px 14px;
             }
             .rsvp-section { padding:20px 16px; }
+            .section-heading { font-size: 1.65rem; letter-spacing: 4px; }
             .dress-palette { grid-template-columns: repeat(3, 1fr); gap: 8px; }
             .dress-swatch { min-height: 58px; }
             .dress-note { grid-template-columns: 1fr; }
@@ -1263,6 +1284,7 @@
             </div>
 
             <p class="personal-greeting" id="personalGreeting"></p>
+            <p class="personal-intro">Скоро наступит самый очень важный для нас день - мы станем семьей</p>
 
             <div class="couple-names">
                 <div class="couple-name-line">Кирилл</div>
@@ -1340,7 +1362,7 @@
 
             <!-- Countdown moved to bottom -->
             <div class="countdown-wrap countdown-wrap--top-placeholder">
-                <p class="countdown-label-top">до свадьбы осталось</p>
+                <p class="countdown-label-top">Мы скажем «да» через….</p>
                 <div class="countdown" id="countdownTop">
                     <div class="cd-item"><span class="cd-num" id="daysTop">00</span><span class="cd-lbl">дней</span></div>
                     <span class="cd-sep">:</span>
@@ -1415,7 +1437,7 @@
                 <div class="dress-note">
                     <div class="dress-note-block">
                         <div class="dress-note-title">Для дам:</div>
-                        <p class="dress-note-text">Вечерние и коктейльные платья в предложенных оттенках. Также, это могут быть корсеты, юбки, костюмы.</p>
+                        <p class="dress-note-text">Вечерние и коктейльные платья в предложенных оттенках. Также, это могут быть корсеты, юбки, костюмы. Просим избегать белых и ярких неоновых оттенков</p>
                     </div>
                     <div class="dress-note-block">
                         <div class="dress-note-title">Для джентльменов:</div>
@@ -1431,6 +1453,7 @@
             </div>
 
             <!-- Details -->
+            <h2 class="section-heading">Локация</h2>
             <div class="details">
                 <div class="detail-item">
                     <div class="detail-icon-wrap">📅</div>
@@ -1457,17 +1480,13 @@
                 <div class="divider-line"></div>
             </div>
 
-            <p class="message">
-                Будем счастливы разделить с вами<br>
-                этот особенный день нашей жизни
-            </p>
-
             <!-- RSVP -->
+            <h2 class="section-heading">Анкета гостя</h2>
             <div class="rsvp-section">
-                <h3 class="rsvp-title">Подтвердите ваше присутствие</h3>
+                <h3 class="rsvp-title">Пожалуйста, заполните форму ниже и подтвердите Ваше присутствие</h3>
                 <div class="rsvp-buttons">
-                    <button class="rsvp-btn" id="btnYes" onclick="selectAttendance(true)">✓ Я буду</button>
-                    <button class="rsvp-btn" id="btnNo"  onclick="selectAttendance(false)">✕ Не смогу</button>
+                    <button class="rsvp-btn" id="btnYes" onclick="selectAttendance(true)">✓ Да, с удовольствием буду</button>
+                    <button class="rsvp-btn" id="btnNo"  onclick="selectAttendance(false)">✕ К сожалению, не смогу</button>
                 </div>
 
                 <!-- Response message — always visible, outside transport block -->
@@ -1475,45 +1494,33 @@
 
                 <div class="transport-section" id="transportSection">
                     <div class="transport-group">
-                        <p class="transport-group-title">🚗 На чем планируете добираться</p>
+                        <p class="transport-group-title">🚗 Как планируете добираться?</p>
                         <div class="transport-options">
-                            <div class="transport-option" onclick="selectTransport('arrive','car')">
-                                <input type="radio" name="arrive" id="arrive1" value="car">
-                                <label for="arrive1">Сам(а) или с кем-то на машине</label>
+                            <div class="transport-option" onclick="selectTransport('arrive','personal')">
+                                <input type="radio" name="arrive" id="arrive1" value="personal">
+                                <label for="arrive1">На личном транспорте/ с кем-нибудь из гостей</label>
                             </div>
-                            <div class="transport-option" onclick="selectTransport('arrive','public')">
-                                <input type="radio" name="arrive" id="arrive2" value="public">
-                                <label for="arrive2">На общественном транспорте</label>
-                            </div>
-                            <div class="transport-option" onclick="selectTransport('arrive','gazelle')">
-                                <input type="radio" name="arrive" id="arrive3" value="gazelle">
-                                <label for="arrive3">Нужна газель</label>
+                            <div class="transport-option" onclick="selectTransport('arrive','transfer')">
+                                <input type="radio" name="arrive" id="arrive2" value="transfer">
+                                <label for="arrive2">Потребуется трансфер</label>
                             </div>
                         </div>
                     </div>
                     <div class="transport-group" style="margin-top:16px;">
-                        <p class="transport-group-title">🏠 На чем планируете уползать</p>
+                        <p class="transport-group-title">🏠 Как планируете покидать праздничным вечер?</p>
                         <div class="transport-options">
-                            <div class="transport-option" onclick="selectTransport('depart','car')">
-                                <input type="radio" name="depart" id="depart1" value="car">
-                                <label for="depart1">Сам(а) или с кем-то на машине</label>
+                            <div class="transport-option" onclick="selectTransport('depart','personal')">
+                                <input type="radio" name="depart" id="depart1" value="personal">
+                                <label for="depart1">На личном транспорте/ с кем-нибудь из гостей</label>
                             </div>
-                            <div class="transport-option" onclick="selectTransport('depart','public')">
-                                <input type="radio" name="depart" id="depart2" value="public">
-                                <label for="depart2">На общественном транспорте</label>
-                            </div>
-                            <div class="transport-option" onclick="selectTransport('depart','stay')">
-                                <input type="radio" name="depart" id="depart3" value="stay">
-                                <label for="depart3">Останусь на месте проведения</label>
-                            </div>
-                            <div class="transport-option" onclick="selectTransport('depart','gazelle')">
-                                <input type="radio" name="depart" id="depart4" value="gazelle">
-                                <label for="depart4">Нужна газель</label>
+                            <div class="transport-option" onclick="selectTransport('depart','transfer')">
+                                <input type="radio" name="depart" id="depart2" value="transfer">
+                                <label for="depart2">Потребуется трансфер</label>
                             </div>
                         </div>
                     </div>
                     <div class="transport-group survey-group">
-                        <p class="transport-group-title">🥂 Что предпочитаете из напитков</p>
+                        <p class="transport-group-title">🥂 Что предпочитаете из напитков?</p>
                         <div class="transport-options">
                             <div class="transport-option" onclick="selectDrinkPreference('Самогон')">
                                 <input type="radio" name="drinkPreference" id="drink1" value="Самогон">
@@ -1550,7 +1557,7 @@
 
             <!-- Countdown -->
             <div class="countdown-wrap countdown-wrap--bottom">
-                <p class="countdown-label-top">до свадьбы осталось</p>
+                <p class="countdown-label-top">Мы скажем «да» через….</p>
                 <div class="countdown" id="countdown">
                     <div class="cd-item"><span class="cd-num" id="days">00</span><span class="cd-lbl">дней</span></div>
                     <span class="cd-sep">:</span>
@@ -1625,7 +1632,7 @@
             <div class="stat-card"><div class="stat-number" id="totalGuests">0</div><div class="stat-label">Всего ответов</div></div>
             <div class="stat-card"><div class="stat-number" id="attendingGuests">0</div><div class="stat-label">Придут</div></div>
             <div class="stat-card"><div class="stat-number" id="notAttendingGuests">0</div><div class="stat-label">Не придут</div></div>
-            <div class="stat-card"><div class="stat-number" id="needGazelle">0</div><div class="stat-label">Нужна газель</div></div>
+            <div class="stat-card"><div class="stat-number" id="needTransfer">0</div><div class="stat-label">Трансфер</div></div>
         </div>
         <h2 style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--dark);margin-bottom:18px;font-size:1.45rem;">Список гостей</h2>
         <div id="guestsTableContainer">
@@ -1932,8 +1939,14 @@ async function submitResponse() {
 
     if (submitBtn) { submitBtn.disabled = true; submitBtn.innerHTML = '<span class="loading"></span>Отправка...'; }
 
-    const arriveMap = { car:'Сам(а) или с кем-то на машине', public:'На общественном транспорте', gazelle:'Нужна газель' };
-    const departMap = { car:'Сам(а) или с кем-то на машине', public:'На общественном транспорте', stay:'Останусь на месте проведения', gazelle:'Нужна газель' };
+    const arriveMap = {
+        personal: 'На личном транспорте/ с кем-нибудь из гостей',
+        transfer: 'Потребуется трансфер'
+    };
+    const departMap = {
+        personal: 'На личном транспорте/ с кем-нибудь из гостей',
+        transfer: 'Потребуется трансфер'
+    };
     const endpoint = window.RSVP_ENDPOINT;
 
     if (!endpoint || endpoint.includes('YOUR-WORKER')) {
@@ -2062,11 +2075,11 @@ async function loadGuests() {
         const guests = await response.json();
         const att  = guests.filter(g=>g.will_attend===1).length;
         const natt = guests.filter(g=>g.will_attend===0).length;
-        const gaz  = guests.filter(g=>g.transport_arrive?.includes('газель')||g.transport_depart?.includes('газель')).length;
+        const transfer  = guests.filter(g=>g.transport_arrive?.includes('трансфер')||g.transport_depart?.includes('трансфер')).length;
         document.getElementById('totalGuests').textContent       = guests.length;
         document.getElementById('attendingGuests').textContent   = att;
         document.getElementById('notAttendingGuests').textContent= natt;
-        document.getElementById('needGazelle').textContent       = gaz;
+        document.getElementById('needTransfer').textContent      = transfer;
 
         const tbody = document.getElementById('guestsTableBody');
         const noData= document.getElementById('noDataMessage');
