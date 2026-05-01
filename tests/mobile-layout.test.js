@@ -132,3 +132,14 @@ test('transport survey only offers personal transport or transfer', () => {
   assert.doesNotMatch(html, /Останусь на месте проведения/);
   assert.doesNotMatch(html, /Нужна газель/);
 });
+
+test('gift note uses the updated wording and signature', () => {
+  assert.match(html, /Ваше присутствие для нас уже самый тёплый подарок\./);
+  assert.match(html, /Пожалуйста, не ломайте голову над подарками! Мы будем очень рады вашему приятному вкладу в бюджет нашей молодой семьи\./);
+  assert.match(html, /Если захотите порадовать нас дополнительно, просим не дарить нам букеты: вместо цветов можно выбрать <strong>сертификаты WB или Ozon<\/strong>\./);
+  assert.match(html, /class="rsvp-success-signature"/);
+  assert.match(html, /С любовью,<br>Елизавета и Кирилл!/);
+
+  assert.doesNotMatch(html, /А если не хочется ломать голову над подарком/);
+  assert.doesNotMatch(html, /новоиспеченной семьи/);
+});
