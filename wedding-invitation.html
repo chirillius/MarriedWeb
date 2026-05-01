@@ -913,9 +913,16 @@
             text-align: center;
             margin-bottom: 18px;
         }
-        .rsvp-buttons { display:flex; gap:12px; justify-content:center; margin-bottom:16px; }
+        .rsvp-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+        }
         .rsvp-btn {
-            flex:1; max-width:175px;
+            width: 100%;
+            max-width: none;
+            min-width: 0;
             padding: 12px 18px;
             border: 1.5px solid var(--rose-light);
             background: transparent;
@@ -927,6 +934,7 @@
             font-family: 'Montserrat', sans-serif;
             letter-spacing: .5px;
             border-radius: 2px;
+            overflow-wrap: anywhere;
         }
         .rsvp-btn:hover:not(:disabled) { background:rgba(181,72,90,.05); border-color:var(--rose); }
         .rsvp-btn.active.yes  { background:linear-gradient(135deg,#3d7a50,#5a9e6a); border-color:#3d7a50; color:#fff; }
@@ -1229,6 +1237,11 @@
             .stats-container { grid-template-columns:repeat(2,1fr); }
             .guests-table th, .guests-table td { padding:9px 7px; font-size:.78rem; }
         }
+        @media (max-width:380px) {
+            .rsvp-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1284,7 +1297,7 @@
             </div>
 
             <p class="personal-greeting" id="personalGreeting"></p>
-            <p class="personal-intro">Скоро наступит самый очень важный для нас день - мы станем семьей</p>
+            <p class="personal-intro">Скоро наступит самый важый для нас день - мы станем семьей</p>
 
             <div class="couple-names">
                 <div class="couple-name-line">Кирилл</div>

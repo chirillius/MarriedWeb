@@ -84,7 +84,8 @@ test('location section includes an external map button', () => {
 });
 
 test('invitation copy matches the updated guest wording', () => {
-  assert.match(html, /Скоро наступит самый очень важный для нас день - мы станем семьей/);
+  assert.match(html, /Скоро наступит самый важый для нас день - мы станем семьей/);
+  assert.doesNotMatch(html, /Скоро наступит самый очень важный для нас день - мы станем семьей/);
   assert.match(html, /Просим избегать белых и ярких неоновых оттенков/);
   assert.match(html, />Локация</);
   assert.doesNotMatch(html, /Будем счастливы разделить с вами/);
@@ -104,6 +105,18 @@ test('invitation copy matches the updated guest wording', () => {
   assert.doesNotMatch(html, /На чем планируете добираться/);
   assert.doesNotMatch(html, /На чем планируете уползать/);
   assert.doesNotMatch(html, /до свадьбы осталось/);
+});
+
+test('guest questionnaire buttons fit inside the RSVP block', () => {
+  const buttonsBlock = cssBlock('\\.rsvp-buttons');
+  const buttonBlock = cssBlock('\\.rsvp-btn');
+
+  assert.match(buttonsBlock, /display:\s*grid/);
+  assert.match(buttonsBlock, /grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)/);
+  assert.match(buttonBlock, /max-width:\s*none/);
+  assert.match(buttonBlock, /min-width:\s*0/);
+  assert.match(buttonBlock, /overflow-wrap:\s*anywhere/);
+  assert.match(html, /@media \(max-width:380px\)[\s\S]*\.rsvp-buttons\s*\{\s*grid-template-columns:\s*1fr/);
 });
 
 test('transport survey only offers personal transport or transfer', () => {
