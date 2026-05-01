@@ -923,12 +923,13 @@
             width: 100%;
             max-width: none;
             min-width: 0;
-            padding: 12px 18px;
+            padding: 11px 12px;
             border: 1.5px solid var(--rose-light);
             background: transparent;
             color: var(--rose);
-            font-size: .88rem;
+            font-size: .8rem;
             font-weight: 500;
+            line-height: 1.35;
             cursor: pointer;
             transition: all .3s;
             font-family: 'Montserrat', sans-serif;
@@ -1237,7 +1238,7 @@
             .stats-container { grid-template-columns:repeat(2,1fr); }
             .guests-table th, .guests-table td { padding:9px 7px; font-size:.78rem; }
         }
-        @media (max-width:380px) {
+        @media (max-width:600px) {
             .rsvp-buttons {
                 grid-template-columns: 1fr;
             }
@@ -1498,8 +1499,8 @@
             <div class="rsvp-section">
                 <h3 class="rsvp-title">Пожалуйста, заполните форму ниже и подтвердите Ваше присутствие</h3>
                 <div class="rsvp-buttons">
-                    <button class="rsvp-btn" id="btnYes" onclick="selectAttendance(true)">✓ Да, с удовольствием буду</button>
-                    <button class="rsvp-btn" id="btnNo"  onclick="selectAttendance(false)">✕ К сожалению, не смогу</button>
+                    <button class="rsvp-btn" id="btnYes" onclick="selectAttendance(true)">Да, с удовольствием буду</button>
+                    <button class="rsvp-btn" id="btnNo"  onclick="selectAttendance(false)">К сожалению, не смогу</button>
                 </div>
 
                 <!-- Response message — always visible, outside transport block -->

@@ -92,8 +92,10 @@ test('invitation copy matches the updated guest wording', () => {
   assert.doesNotMatch(html, /этот особенный день нашей жизни/);
   assert.match(html, />Анкета гостя</);
   assert.match(html, />Пожалуйста, заполните форму ниже и подтвердите Ваше присутствие</);
-  assert.match(html, />✓ Да, с удовольствием буду</);
-  assert.match(html, />✕ К сожалению, не смогу</);
+  assert.match(html, />Да, с удовольствием буду</);
+  assert.match(html, />К сожалению, не смогу</);
+  assert.doesNotMatch(html, />✓ Да, с удовольствием буду</);
+  assert.doesNotMatch(html, />✕ К сожалению, не смогу</);
   assert.match(html, /Как планируете добираться\?/);
   assert.match(html, /Как планируете покидать праздничным вечер\?/);
   assert.match(html, /Что предпочитаете из напитков\?/);
@@ -115,8 +117,10 @@ test('guest questionnaire buttons fit inside the RSVP block', () => {
   assert.match(buttonsBlock, /grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)/);
   assert.match(buttonBlock, /max-width:\s*none/);
   assert.match(buttonBlock, /min-width:\s*0/);
+  assert.match(buttonBlock, /font-size:\s*\.8rem/);
+  assert.match(buttonBlock, /line-height:\s*1\.35/);
   assert.match(buttonBlock, /overflow-wrap:\s*anywhere/);
-  assert.match(html, /@media \(max-width:380px\)[\s\S]*\.rsvp-buttons\s*\{\s*grid-template-columns:\s*1fr/);
+  assert.match(html, /@media \(max-width:600px\)[\s\S]*\.rsvp-buttons\s*\{\s*grid-template-columns:\s*1fr/);
 });
 
 test('transport survey only offers personal transport or transfer', () => {
